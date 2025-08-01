@@ -1,0 +1,6 @@
+﻿namespace LibrarySystem.API.Extensions
+{
+    public class SwaggerServiceCollectionExtensions
+    {
+    }
+}
