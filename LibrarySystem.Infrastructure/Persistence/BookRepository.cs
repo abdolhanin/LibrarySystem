@@ -23,5 +23,9 @@ namespace LibrarySystem.Infrastructure.Persistence
                 .Where(b => b.IsAvailable)
                 .ToListAsync();
         }
+        public async Task SaveChangesAsync()
+        {
+            await context.SaveChangesAsync();
+        }
     }
 }

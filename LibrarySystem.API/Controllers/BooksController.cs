@@ -20,5 +20,19 @@ namespace LibrarySystem.API.Controllers
         {
             return Ok();
         }
+
+        [HttpPost("{id}/lend")]
+        public async Task<IActionResult> Lend(Guid id)
+        {
+            await mediator.Send(new LendBookCommand(id));
+            return NoContent();
+        }
+
+        [HttpPost("{id}/return")]
+        public async Task<IActionResult> Return(Guid id)
+        {
+            await mediator.Send(new ReturnBookCommand { BookId = id });
+            return NoContent();
+        }
     }
 }
