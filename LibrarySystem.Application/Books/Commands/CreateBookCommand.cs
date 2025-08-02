@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace LibrarySystem.Application.Books.Commands
 {
-    internal class CreateBookCommand
-    {
-    }
+
+
+    public record CreateBookCommand(
+        string Title,
+        string Author,
+        string ISBN,
+        int AvailableCopies
+    ) : IRequest<Guid>;
 }

@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using LibrarySystem.Application.Books.Commands;
 
 namespace LibrarySystem.Application.Validators
 {
-    internal class CreateBookCommandValidator
+    public class CreateBookCommandValidator : AbstractValidator<CreateBookCommand>
     {
+        public CreateBookCommandValidator()
+        {
+            RuleFor(x => x.Title).NotEmpty().MaximumLength(100);
+            RuleFor(x => x.Author).NotEmpty().MaximumLength(100);
+            RuleFor(x => x.ISBN).NotEmpty().Length(10, 13);
+            RuleFor(x => x.AvailableCopies).GreaterThanOrEqualTo(1);
+        }
     }
 }
