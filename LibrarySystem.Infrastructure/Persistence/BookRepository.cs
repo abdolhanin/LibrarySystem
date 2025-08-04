@@ -17,15 +17,17 @@ namespace LibrarySystem.Infrastructure.Persistence
             return await context.Books.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Book>> GetAllAvailableAsync()
-        {
-            return await context.Books
-                .Where(b => b.IsAvailable)
-                .ToListAsync();
-        }
         public async Task SaveChangesAsync()
         {
             await context.SaveChangesAsync();
+        }
+
+        public async Task<List<Book>> GetAvailableBooksAsync()
+        {
+            return await context.Books
+                .Where(b => b.AvailableCopies > 0 && !b.IsArchived)
+                .ToListAsync();
+
         }
     }
 }

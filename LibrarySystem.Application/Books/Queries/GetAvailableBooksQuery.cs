@@ -1,6 +1,10 @@
-﻿namespace LibrarySystem.Application.Books.Queries
+﻿using LibrarySystem.Application.DTOs;
+using MediatR;
+
+namespace LibrarySystem.Application.Books.Queries
 {
-    internal class GetAvailableBooksQuery
+    public class GetAvailableBooksQuery : IRequest<List<AvailableBookDto>>
     {
     }
+
 }
