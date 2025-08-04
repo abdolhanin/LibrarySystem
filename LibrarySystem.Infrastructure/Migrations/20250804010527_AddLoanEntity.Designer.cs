@@ -3,6 +3,7 @@ using System;
 using LibrarySystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibrarySystem.Infrastructure.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    partial class LibraryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250804010527_AddLoanEntity")]
+    partial class AddLoanEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,9 +63,6 @@ namespace LibrarySystem.Infrastructure.Migrations
                     b.Property<string>("Borrower")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsReturned")
-                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("LoanDate")
                         .HasColumnType("timestamp with time zone");

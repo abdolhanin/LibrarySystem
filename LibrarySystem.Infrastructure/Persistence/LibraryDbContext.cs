@@ -5,7 +5,8 @@ namespace LibrarySystem.Infrastructure.Persistence
 {
     public class LibraryDbContext(DbContextOptions<LibraryDbContext> options) : DbContext(options)
     {
-        public DbSet<Book> Books => Set<Book>();
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Loan> Loans { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

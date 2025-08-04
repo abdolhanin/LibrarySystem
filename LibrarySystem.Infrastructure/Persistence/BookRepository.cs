@@ -17,9 +17,9 @@ namespace LibrarySystem.Infrastructure.Persistence
             return await context.Books.FindAsync(id);
         }
 
-        public async Task SaveChangesAsync()
+        public async Task SaveChangesAsync(CancellationToken cancellationToken)
         {
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<List<Book>> GetAvailableBooksAsync()

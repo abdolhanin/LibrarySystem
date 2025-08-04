@@ -13,7 +13,7 @@ namespace LibrarySystem.Application.Books.Commands
                 throw new NotFoundException("Book not found.");
 
             book.Lend();
-            await repository.SaveChangesAsync();
+            await repository.SaveChangesAsync(cancellationToken);
         }
     }
 }

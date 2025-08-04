@@ -11,8 +11,8 @@ namespace LibrarySystem.Application.Books.Commands
             if (book == null)
                 throw new Exception("Book not found.");
 
-            book.Return();
-            await repository.SaveChangesAsync();
+            book.IncreaseAvailableCopies();
+            await repository.SaveChangesAsync(cancellationToken);
         }
     }
 }

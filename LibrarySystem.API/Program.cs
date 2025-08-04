@@ -2,6 +2,7 @@ using FluentValidation;
 using LibrarySystem.Application.Books.Commands;
 using LibrarySystem.Application.Validators;
 using LibrarySystem.Domain.Interfaces;
+using LibrarySystem.Infrastructure.DomainEvents;
 using LibrarySystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +12,14 @@ builder.Services.AddDbContext<LibraryDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
-
+builder.Services.AddScoped<ILoanRepository, LoanRepository>();
+builder.Services.AddScoped<IDomainEventDispatcher, DomainEventDispatcher>();
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssemblyContaining<CreateBookCommand>());
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(CreateBookCommand).Assembly);
+});
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(typeof(CreateBookCommand).Assembly);
@@ -29,8 +37,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
-builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssemblyContaining<CreateBookCommand>());
+
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateBookCommandValidator>();
 

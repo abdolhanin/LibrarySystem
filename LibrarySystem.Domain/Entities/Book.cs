@@ -29,7 +29,7 @@
             ISBN = isbn;
         }
 
-        public void Return()
+        public void IncreaseAvailableCopies()
         {
             AvailableCopies++;
         }

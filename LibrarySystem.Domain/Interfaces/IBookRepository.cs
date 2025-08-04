@@ -6,7 +6,7 @@ namespace LibrarySystem.Domain.Interfaces
     {
         Task AddAsync(Book book, CancellationToken cancellationToken);
         Task<Book?> GetByIdAsync(Guid id);
-        Task SaveChangesAsync();
+        Task SaveChangesAsync(CancellationToken cancellationToken);
         Task<List<Book>> GetAvailableBooksAsync();
 
     }

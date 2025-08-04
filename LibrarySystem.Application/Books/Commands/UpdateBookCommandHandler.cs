@@ -13,7 +13,7 @@ namespace LibrarySystem.Application.Books.Commands
 
             book.UpdateDetails(request.Title, request.Author, request.ISBN);
 
-            await repository.SaveChangesAsync();
+            await repository.SaveChangesAsync(cancellationToken);
         }
     }
 }
