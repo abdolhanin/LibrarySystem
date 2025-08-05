@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="header">
+    <h2>Loans</h2>
+    <button mat-raised-button color="primary" (click)="openLoanForm()">
+      <mat-icon>add</mat-icon>
+      Add Loan
+    </button>
+  </div>
+
+  <div *ngIf="loans.length === 0">
+    <p>No loans available.</p>
+  </div>
+
+  <div *ngIf="loans.length > 0">
+    <p>Found {{ loans.length }} loans</p>
+  </div>
+</div>

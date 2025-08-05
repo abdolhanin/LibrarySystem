@@ -1,0 +1,61 @@
+<h2 mat-dialog-title>{{ isEditMode ? "Edit Loan" : "Add Loan" }}</h2>
+
+<form [formGroup]="loanForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" placeholder="Enter loan title" />
+      <mat-error *ngIf="loanForm.get('title')?.hasError('required')">
+        Title is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Author</mat-label>
+      <input
+        matInput
+        formControlName="author"
+        placeholder="Enter author name"
+      />
+      <mat-error *ngIf="loanForm.get('author')?.hasError('required')">
+        Author is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>ISBN</mat-label>
+      <input matInput formControlName="isbn" placeholder="Enter ISBN" />
+      <mat-error *ngIf="loanForm.get('isbn')?.hasError('required')">
+        ISBN is required
+      </mat-error>
+      <mat-error *ngIf="loanForm.get('isbn')?.hasError('pattern')">
+        ISBN must be 10 or 13 digits
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Published Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="publishedDate"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isAvailable">Available</mat-checkbox>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!loanForm.valid"
+    >
+      {{ isEditMode ? "Update" : "Create" }}
+    </button>
+  </mat-dialog-actions>
+</form>

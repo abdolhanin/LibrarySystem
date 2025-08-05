@@ -1,0 +1,131 @@
+<div class="container">
+  <!-- Header Section -->
+  <div class="header">
+    <div class="title-section">
+      <h1 class="page-title">
+        <mat-icon class="title-icon">library_books</mat-icon>
+        Library Books
+      </h1>
+      <p class="subtitle" *ngIf="!loading">
+        Manage your book collection • {{ books.length }} books available
+      </p>
+    </div>
+    <div class="action-buttons">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openBookForm()"
+        class="add-button"
+      >
+        <mat-icon>add</mat-icon>
+        Add New Book
+      </button>
+      <button mat-stroked-button (click)="loadBooks()" class="refresh-button">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="loading-text">Loading books...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <h3>Oops! Something went wrong</h3>
+    <p>{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="loadBooks()">
+      <mat-icon>refresh</mat-icon>
+      Try Again
+    </button>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="books.length === 0 && !loading && !error" class="empty-container">
+    <mat-icon class="empty-icon">library_books</mat-icon>
+    <h3>No Books Available</h3>
+    <p>Start building your library by adding your first book!</p>
+    <button mat-raised-button color="primary" (click)="openBookForm()">
+      <mat-icon>add</mat-icon>
+      Add Your First Book
+    </button>
+  </div>
+
+  <!-- Books Grid Display -->
+  <div *ngIf="books.length > 0 && !loading" class="books-section">
+    <!-- Simple Grid View -->
+    <div class="books-grid">
+      <mat-card
+        *ngFor="let book of books"
+        class="book-card"
+        [class.unavailable]="!book.isAvailable"
+      >
+        <div class="book-card-header">
+          <div class="book-status">
+            <mat-chip [color]="book.isAvailable ? 'primary' : 'warn'" selected>
+              <mat-icon>{{
+                book.isAvailable ? "check_circle" : "block"
+              }}</mat-icon>
+              {{ book.isAvailable ? "Available" : "Not Available" }}
+            </mat-chip>
+          </div>
+        </div>
+
+        <mat-card-content>
+          <div class="book-cover">
+            <div class="book-spine">
+              <span class="spine-title">{{ book.title }}</span>
+              <span class="spine-author">{{ book.author }}</span>
+            </div>
+          </div>
+
+          <div class="book-details">
+            <h3 class="book-title" [title]="book.title">{{ book.title }}</h3>
+            <p class="book-author">by {{ book.author }}</p>
+
+            <div class="book-meta">
+              <div class="meta-item">
+                <mat-icon class="meta-icon">book</mat-icon>
+                <span class="meta-label">ISBN:</span>
+                <span class="meta-value">{{ book.isbn }}</span>
+              </div>
+
+              <div class="meta-item">
+                <mat-icon class="meta-icon">event</mat-icon>
+                <span class="meta-label">Published:</span>
+                <span class="meta-value">{{
+                  book.publishedDate | date : "MMM yyyy"
+                }}</span>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions class="book-actions">
+          <button mat-button color="primary" (click)="openBookForm(book)">
+            <mat-icon>edit</mat-icon>
+            Edit
+          </button>
+          <button
+            mat-button
+            [color]="book.isAvailable ? 'accent' : 'primary'"
+            (click)="
+              book.isAvailable ? lendBook(book.id!) : returnBook(book.id!)
+            "
+          >
+            <mat-icon>{{ book.isAvailable ? "send" : "undo" }}</mat-icon>
+            {{ book.isAvailable ? "Lend" : "Return" }}
+          </button>
+          <button mat-button color="warn" (click)="archiveBook(book.id!)">
+            <mat-icon>archive</mat-icon>
+            Archive
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

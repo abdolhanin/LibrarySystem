@@ -1,0 +1,107 @@
+<div style="text-align: center; padding: 50px; font-family: Arial, sans-serif">
+  <h1>My Angular App</h1>
+  <p>Angular ↔ .NET Core DDD Connection Test</p>
+
+  <div style="margin-top: 30px">
+    <h2>API Configuration</h2>
+    <p>
+      API URL: <strong>{{ apiUrl }}</strong>
+    </p>
+    <p>
+      Production Mode: <strong>{{ isProduction ? "Yes" : "No" }}</strong>
+    </p>
+  </div>
+
+  <div
+    style="
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+    "
+  >
+    <h3>Connection Status</h3>
+    <p><strong>Status:</strong> {{ connectionStatus }}</p>
+    <p *ngIf="connectionMessage">
+      <strong>Message:</strong> {{ connectionMessage }}
+    </p>
+    <p *ngIf="error" style="color: red">
+      <strong>{{ error }}</strong>
+    </p>
+
+    <div style="margin-top: 20px">
+      <button
+        (click)="testConnection()"
+        [disabled]="loading"
+        style="
+          margin: 5px;
+          padding: 10px 20px;
+          background-color: #1976d2;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        "
+      >
+        {{ loading ? "Testing..." : "Test Connection" }}
+      </button>
+
+      <button
+        (click)="loadTestData()"
+        [disabled]="loading"
+        style="
+          margin: 5px;
+          padding: 10px 20px;
+          background-color: #388e3c;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        "
+      >
+        {{ loading ? "Loading..." : "Load Test Data" }}
+      </button>
+
+      <button
+        (click)="sendTestMessage()"
+        [disabled]="loading"
+        style="
+          margin: 5px;
+          padding: 10px 20px;
+          background-color: #f57c00;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        "
+      >
+        Send Test Message
+      </button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="testData.length > 0"
+    style="
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #e8f5e8;
+      border-radius: 8px;
+    "
+  >
+    <h3>Data from API</h3>
+    <div
+      *ngFor="let item of testData"
+      style="
+        margin: 10px 0;
+        padding: 10px;
+        background-color: white;
+        border-radius: 4px;
+      "
+    >
+      <strong>{{ item.name }}</strong> (ID: {{ item.id }})
+      <br />
+      <em>{{ item.description }}</em>
+    </div>
+  </div>
+</div>
